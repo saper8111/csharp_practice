@@ -21,7 +21,7 @@ namespace WebAddressbookPracticTests
         public void SetupTest()
         {
             driver = new FirefoxDriver();
-            baseURL = "https://www.google.com/";
+            baseURL = "http://localhost/addressbook";
             verificationErrors = new StringBuilder();
         }
 
@@ -42,13 +42,36 @@ namespace WebAddressbookPracticTests
         [Test]
         public void ContactCreationTest()
         {
-            driver.Navigate().GoToUrl("http://localhost/addressbook/index.php");
+            OpenHomePage();
+            Login("admin", "password");
+            InitContactCreation();
+            FillContactForm();
+            SubmitContactCreation();
+            GoToGroupsPage();
+            Logout();
+        }
+
+        private void OpenHomePage()
+        {
+            driver.Navigate().GoToUrl(baseURL + "/index.php");
+        }
+
+        private void Login(string user, string password)
+        {
             driver.FindElement(By.Name("user")).Clear();
-            driver.FindElement(By.Name("user")).SendKeys("admin");
+            driver.FindElement(By.Name("user")).SendKeys(user);
             driver.FindElement(By.Name("pass")).Clear();
-            driver.FindElement(By.Name("pass")).SendKeys("secret");
+            driver.FindElement(By.Name("pass")).SendKeys(password);
             driver.FindElement(By.XPath("//input[@value='Login']")).Click();
+        }
+
+        private void InitContactCreation()
+        {
             driver.FindElement(By.LinkText("add new")).Click();
+        }
+
+        private void FillContactForm()
+        {
             driver.FindElement(By.Name("firstname")).Clear();
             driver.FindElement(By.Name("firstname")).SendKeys("1233");
             driver.FindElement(By.Name("middlename")).Clear();
@@ -61,56 +84,69 @@ namespace WebAddressbookPracticTests
             driver.FindElement(By.XPath("//div[@id='content']/form/label[7]")).Click();
             driver.FindElement(By.Name("company")).Clear();
             driver.FindElement(By.Name("company")).SendKeys("srdtrfdf");
+        }
+
+        private void SubmitContactCreation()
+        {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+        }
+
+        private void GoToGroupsPage()
+        {
             driver.FindElement(By.LinkText("home page")).Click();
+        }
+
+        private void Logout()
+        {
             driver.FindElement(By.LinkText("Logout")).Click();
         }
-        private bool IsElementPresent(By by)
-        {
-            try
-            {
-                driver.FindElement(by);
-                return true;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        }
 
-        private bool IsAlertPresent()
-        {
-            try
-            {
-                driver.SwitchTo().Alert();
-                return true;
-            }
-            catch (NoAlertPresentException)
-            {
-                return false;
-            }
-        }
+        //private bool IsElementPresent(By by)
+        //{
+        //    try
+        //    {
+        //        driver.FindElement(by);
+        //        return true;
+        //    }
+        //    catch (NoSuchElementException)
+        //    {
+        //        return false;
+        //    }
+        //}
 
-        private string CloseAlertAndGetItsText()
-        {
-            try
-            {
-                IAlert alert = driver.SwitchTo().Alert();
-                string alertText = alert.Text;
-                if (acceptNextAlert)
-                {
-                    alert.Accept();
-                }
-                else
-                {
-                    alert.Dismiss();
-                }
-                return alertText;
-            }
-            finally
-            {
-                acceptNextAlert = true;
-            }
-        }
+        //private bool IsAlertPresent()
+        //{
+        //    try
+        //    {
+        //        driver.SwitchTo().Alert();
+        //        return true;
+        //    }
+        //    catch (NoAlertPresentException)
+        //    {
+        //        return false;
+        //    }
+        //}
+
+        //private string CloseAlertAndGetItsText()
+        //{
+        //    try
+        //    {
+        //        IAlert alert = driver.SwitchTo().Alert();
+        //        string alertText = alert.Text;
+        //        if (acceptNextAlert)
+        //        {
+        //            alert.Accept();
+        //        }
+        //        else
+        //        {
+        //            alert.Dismiss();
+        //        }
+        //        return alertText;
+        //    }
+        //    finally
+        //    {
+        //        acceptNextAlert = true;
+        //    }
+        //}
     }
 }
