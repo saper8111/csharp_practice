@@ -45,7 +45,7 @@ namespace WebAddressbookPracticTests
             OpenHomePage();
             Login("admin", "secret");
             InitContactCreation();
-            FillContactForm("1233", "233445", "fhgjhhjy", "werertdtgfg", "sfgdghguj", "srdtrfdf");
+            FillContactForm("'мr", "233445", "fhgjhhjy", "werertdtgfg", "sfgdghguj", "srdtrfdf");
             SubmitContactCreation();
             GoToGroupsPage();
             Logout();
