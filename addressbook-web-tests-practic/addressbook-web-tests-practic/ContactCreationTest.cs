@@ -43,9 +43,9 @@ namespace WebAddressbookPracticTests
         public void ContactCreationTest()
         {
             OpenHomePage();
-            Login("admin", "password");
+            Login("admin", "secret");
             InitContactCreation();
-            FillContactForm();
+            FillContactForm("1233", "233445", "fhgjhhjy", "werertdtgfg", "sfgdghguj", "srdtrfdf");
             SubmitContactCreation();
             GoToGroupsPage();
             Logout();
@@ -70,20 +70,21 @@ namespace WebAddressbookPracticTests
             driver.FindElement(By.LinkText("add new")).Click();
         }
 
-        private void FillContactForm()
+        private void FillContactForm(string firstname, string middlename, string lastname, 
+                                     string nickname, string title, string company)
         {
             driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys("1233");
+            driver.FindElement(By.Name("firstname")).SendKeys(firstname);
             driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("middlename")).SendKeys("233445");
+            driver.FindElement(By.Name("middlename")).SendKeys(middlename);
             driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys("fhgjhhjy");
+            driver.FindElement(By.Name("lastname")).SendKeys(lastname);
             driver.FindElement(By.Name("nickname")).Clear();
-            driver.FindElement(By.Name("nickname")).SendKeys("werertdtgfg");
-            driver.FindElement(By.Name("title")).Click();
-            driver.FindElement(By.XPath("//div[@id='content']/form/label[7]")).Click();
+            driver.FindElement(By.Name("nickname")).SendKeys(nickname);
+            driver.FindElement(By.Name("title")).Clear();
+            driver.FindElement(By.Name("title")).SendKeys(title);
             driver.FindElement(By.Name("company")).Clear();
-            driver.FindElement(By.Name("company")).SendKeys("srdtrfdf");
+            driver.FindElement(By.Name("company")).SendKeys(company);
         }
 
         private void SubmitContactCreation()
